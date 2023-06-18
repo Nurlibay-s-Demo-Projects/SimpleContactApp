@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.nurlibaydev.contactapp.databinding.ItemContactBinding
+import uz.nurlibaydev.contactapp.room.Contact
 
 class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
@@ -17,8 +18,8 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() 
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Contact) {
             binding.apply {
-                tvContactName.text = item.name
-                tvContactPhone.text = item.phone
+                tvContactName.text = item.contactName
+                tvContactPhone.text = item.phoneNumber
             }
         }
     }
