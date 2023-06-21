@@ -20,8 +20,17 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() 
             binding.apply {
                 tvContactName.text = item.contactName
                 tvContactPhone.text = item.phoneNumber
+
+                btnDelete.setOnClickListener {
+                    deleteBtnClicked.invoke(item)
+                }
             }
         }
+    }
+
+    var deleteBtnClicked: (contact: Contact) -> Unit = {}
+    fun deleteBtnClicked(block: (Contact) -> Unit) {
+        deleteBtnClicked = block
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
