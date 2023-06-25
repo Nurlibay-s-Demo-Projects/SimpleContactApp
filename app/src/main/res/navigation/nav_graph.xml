@@ -20,5 +20,10 @@
         android:name="uz.nurlibaydev.contactapp.AddScreen"
         android:label="AddScreen"
         tools:layout="@layout/screen_add"
-        />
+        >
+        <argument
+            android:name="contact"
+            app:argType="uz.nurlibaydev.contactapp.room.Contact"
+            app:nullable="true" />
+    </fragment>
 </navigation>

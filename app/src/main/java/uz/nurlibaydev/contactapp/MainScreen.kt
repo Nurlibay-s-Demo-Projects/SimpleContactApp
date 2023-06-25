@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -24,12 +25,23 @@ class MainScreen : Fragment(R.layout.screen_main) {
         binding.rvContacts.adapter = adapter
         dao = ContactDatabase.getDatabase(requireContext()).contactDao()
 
+        Toast.makeText(requireContext(), "onViewCreated", Toast.LENGTH_SHORT).show()
+
         binding.btnAdd.setOnClickListener {
-            findNavController().navigate(R.id.addScreen)
+            val action = MainScreenDirections.actionMainScreenToAddScreen(null)
+            findNavController().navigate(action)
         }
 
         binding.editQuery.doAfterTextChanged {
            adapter.contacts = dao.findContactWithName("$it%").toMutableList()
+        }
+        binding.ivMore.setOnClickListener {
+            dao.deleteAll()
+            setData()
+        }
+        adapter.editBtnClicked {
+            val action = MainScreenDirections.actionMainScreenToAddScreen(it)
+            findNavController().navigate(action)
         }
 
         adapter.deleteBtnClicked {

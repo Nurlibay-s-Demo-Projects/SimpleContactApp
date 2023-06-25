@@ -24,13 +24,27 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() 
                 btnDelete.setOnClickListener {
                     deleteBtnClicked.invoke(item)
                 }
+
+                rootItem.setOnLongClickListener {
+                    rootItem.alpha = 0.3f
+                    true
+                }
+
+                btnEdit.setOnClickListener {
+                    editBtnClicked.invoke(item)
+                }
             }
         }
     }
-
+    
     var deleteBtnClicked: (contact: Contact) -> Unit = {}
     fun deleteBtnClicked(block: (Contact) -> Unit) {
         deleteBtnClicked = block
+    }
+
+    var editBtnClicked: (contact: Contact) -> Unit = {}
+    fun editBtnClicked(block: (Contact) -> Unit) {
+        editBtnClicked = block
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {

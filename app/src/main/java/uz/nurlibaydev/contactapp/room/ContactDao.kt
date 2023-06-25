@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface ContactDao {
@@ -31,4 +32,10 @@ interface ContactDao {
     // "Nur%"
     // Nurlibay
     // Nursultan
+
+    @Update
+    fun updateContact(contact: Contact)
+
+    @Query("DELETE FROM contact")
+    fun deleteAll()
 }
