@@ -15,6 +15,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_check"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/check"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/img_contact"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_contact_name"
         android:layout_width="wrap_content"

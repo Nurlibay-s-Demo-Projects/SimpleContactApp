@@ -1,13 +1,16 @@
 package uz.nurlibaydev.contactapp
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import uz.nurlibaydev.contactapp.databinding.ItemContactBinding
 import uz.nurlibaydev.contactapp.room.Contact
 
 class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
+    val checkedContactsId = mutableListOf<Int>()
     var contacts = mutableListOf<Contact>()
         set(value) {
             field = value
@@ -25,9 +28,22 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() 
                     deleteBtnClicked.invoke(item)
                 }
 
-                rootItem.setOnLongClickListener {
-                    rootItem.alpha = 0.3f
+                root.setOnLongClickListener {
+                    imgCheck.isVisible = true
+                    checkedContactsId.add(item.id)
+                    observer.invoke(Unit)
                     true
+                }
+
+                root.setOnClickListener {
+                    checkedContactsId.forEach {
+                        if(item.id == it){
+                            checkedContactsId.remove(item.id)
+                            imgCheck.isVisible = false
+                            observer.invoke(Unit)
+                            Log.d("TTT", item.id.toString())
+                        }
+                    }
                 }
 
                 btnEdit.setOnClickListener {
@@ -35,6 +51,11 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() 
                 }
             }
         }
+    }
+
+    var observer: (Unit) -> Unit = {}
+    fun observer(block: (Unit) -> Unit) {
+        observer = block
     }
     
     var deleteBtnClicked: (contact: Contact) -> Unit = {}

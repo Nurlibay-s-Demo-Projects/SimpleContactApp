@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -42,6 +43,13 @@ class MainScreen : Fragment(R.layout.screen_main) {
         adapter.editBtnClicked {
             val action = MainScreenDirections.actionMainScreenToAddScreen(it)
             findNavController().navigate(action)
+        }
+
+        adapter.observer {
+            if(adapter.checkedContactsId.isNotEmpty()){
+                binding.ivClose.isVisible = true
+                binding.title.text = adapter.checkedContactsId.count().toString()
+            }
         }
 
         adapter.deleteBtnClicked {

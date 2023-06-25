@@ -14,5 +14,6 @@ data class Contact(
     var id: Int,
     @ColumnInfo("name") var contactName: String,
     var surname: String? = null,
-    @ColumnInfo(name = "phone") var phoneNumber: String
+    @ColumnInfo(name = "phone") var phoneNumber: String,
+    var state: Boolean = false
 ): Parcelable
