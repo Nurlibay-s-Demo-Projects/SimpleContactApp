@@ -55,11 +55,11 @@ class AddScreen : Fragment(R.layout.screen_add) {
                             id = 0,
                             contactName = name,
                             surname = surname,
-                            phoneNumber = phone
+                            phoneNumber = phone,
+                            state = 0
                         )
                     )
                 }
-
 
                 findNavController().popBackStack()
             }

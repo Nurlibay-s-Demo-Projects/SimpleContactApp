@@ -1,6 +1,5 @@
 package uz.nurlibaydev.contactapp
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -10,7 +9,6 @@ import uz.nurlibaydev.contactapp.room.Contact
 
 class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
-    val checkedContactsId = mutableListOf<Int>()
     var contacts = mutableListOf<Contact>()
         set(value) {
             field = value
@@ -23,27 +21,20 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() 
             binding.apply {
                 tvContactName.text = item.contactName
                 tvContactPhone.text = item.phoneNumber
+                binding.imgCheck.isVisible = item.state == 1
 
                 btnDelete.setOnClickListener {
                     deleteBtnClicked.invoke(item)
                 }
-
                 root.setOnLongClickListener {
                     imgCheck.isVisible = true
-                    checkedContactsId.add(item.id)
-                    observer.invoke(Unit)
+                    observerAdd.invoke(item)
                     true
                 }
 
                 root.setOnClickListener {
-                    checkedContactsId.forEach {
-                        if(item.id == it){
-                            checkedContactsId.remove(item.id)
-                            imgCheck.isVisible = false
-                            observer.invoke(Unit)
-                            Log.d("TTT", item.id.toString())
-                        }
-                    }
+                    imgCheck.isVisible = false
+                    observerRemove.invoke(item)
                 }
 
                 btnEdit.setOnClickListener {
@@ -53,11 +44,16 @@ class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() 
         }
     }
 
-    var observer: (Unit) -> Unit = {}
-    fun observer(block: (Unit) -> Unit) {
-        observer = block
+    var observerAdd: (Contact) -> Unit = {}
+    fun observerAdd(block: (Contact) -> Unit) {
+        observerAdd = block
     }
-    
+
+    var observerRemove: (Contact) -> Unit = {}
+    fun observerRemove(block: (Contact) -> Unit) {
+        observerRemove = block
+    }
+
     var deleteBtnClicked: (contact: Contact) -> Unit = {}
     fun deleteBtnClicked(block: (Contact) -> Unit) {
         deleteBtnClicked = block
